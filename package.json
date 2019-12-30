@@ -14,7 +14,8 @@
     "react-dom": "^16.8.6",
     "moment": "^2.24.0",
     "xirr": "^1.0.3",
-    "numeral": "^2.0.6"
+    "numeral": "^2.0.6",
+    "lodash": "^4.17.15"
   },
   "devDependencies": {
     "babel-eslint": "^9.0.0",

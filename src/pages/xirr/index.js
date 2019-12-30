@@ -1,30 +1,37 @@
 import styles from './index.css';
 import xirr from 'xirr'
-import {Table} from "antd";
-import {columnRender, columns, dateFormat, multiply} from "../../utils/table";
+import {Button, Row, Table} from "antd";
+import {columnRender, col, dateFormat, demo, multiply} from "../../utils/table";
 import moment from "moment";
 import numeral from 'numeral';
-import React, {useEffect, useState} from "react";
+import React from "react";
+import lodash from "lodash";
 
-export default function () {
-  let [dataSource,setDataSource] = useState([]);
-  useEffect(() => {
-    let source = [
-      {amount: -1000, when: new Date(2016, 0, 15)},
-      {amount: -2500, when: new Date(2016, 1, 8)},
-      {amount: -1000, when: new Date(2016, 3, 17)},
-      {amount: 5050, when: new Date(2016, 7, 24)},
-    ];
+export default class XIRR extends React.Component {
+  state = {
+    source: [],
+    columns: [],
+    dataSource: [],
+  };
+
+  componentDidMount() {
+
+  }
+
+  calcXIRR = () => {
+    let {source} = this.state;
     const len = source.length - 1;
     let lastAmount = source[len].amount;
     let lastDate = source[len].when;
+    let columns = lodash.cloneDeep(col);
+    let dataSource = [];
     for (let i = 0; i <= 14; i++) {
       let text = moment(lastDate).add(i, 'd').format(dateFormat);
       columns.push({
-        dataIndex: text, key: text, title: text,render:columnRender
+        dataIndex: text, key: text, title: text, render: columnRender
       })
     }
-    let dataSource = [];
+
     for (let i of multiply) {
       let text = lastAmount * i;
       source[len].amount = text;
@@ -37,11 +44,21 @@ export default function () {
       }
       dataSource.push(obj);
     }
-    setDataSource(dataSource);
-  },[]);
-  return (
-    <div className={styles.normal}>
-      <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'}/>
-    </div>
-  );
+    this.setState({columns, dataSource});
+  };
+  showDemo = () => {
+    this.setState({source: lodash.cloneDeep(demo)}, () => this.calcXIRR())
+  };
+
+  render() {
+    const {columns, dataSource} = this.state;
+    return (
+      <div className={styles.normal}>
+        <Row className={styles.row}>
+          <Button type={'primary'} onClick={this.showDemo}>Demo</Button>
+        </Row>
+        <Table columns={columns} dataSource={dataSource} pagination={false} size={'small'}/>
+      </div>
+    );
+  }
 }
