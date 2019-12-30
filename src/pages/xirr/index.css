@@ -4,5 +4,8 @@
   text-align: center;
 }
 .row{
-  padding: 5px;
+  padding: 5px;display: flex;justify-content: space-around;
+}
+.table th{
+  padding: 6px!important;
 }
