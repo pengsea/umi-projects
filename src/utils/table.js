@@ -1,11 +1,12 @@
 import React from "react";
-import {Tag} from "antd";import numeral from 'numeral';
+import numeral from 'numeral';
+import styles from '../pages/xirr/index.css';
 export const sourceCol = [
   {dataIndex: 'amount', title: '数量', key: 'amount'},
   {dataIndex: 'date', title: '日期', key: 'date'},
 ];
 export const col = [
-  {dataIndex: 'index', title: '', key: 'index',render:text=>numeral(text).format('0,0.00')}
+  {dataIndex: 'index', title: '', key: 'index', render: text => numeral(text).format('0,0.00')}
 ];
 export const dateFormatIn = 'YYYY/M/D';
 export const dateFormatOut = 'YY/M/D';
@@ -16,14 +17,14 @@ export const multiply = [0.9, 0.91, 0.92, 0.93, 0.94, 0.95, 0.96, 0.97, 0.98, 0.
   1.06, 1.07, 1.08, 1.09, 1.1];
 export const columnRender = (text, record) => {
   if (record.key === 1) {
-    return <Tag color="#108ee9">{text}</Tag>
+    return <div className={styles.currentRow}>{text}</div>
   } else {
     return text;
   }
 };
 export const demo = [
-  { key: '0',amount: -1000, date:'2016/1/15'},
-  { key: '1',amount: -2500, date:'2016/2/8' },
-  { key: '2',amount: -1000, date:'2016/4/17'},
-  { key: '3',amount: 5050, date:'2016/8/24'},
+  {key: '0', amount: -1000, date: '2016/1/15'},
+  {key: '1', amount: -2500, date: '2016/2/8'},
+  {key: '2', amount: -1000, date: '2016/4/17'},
+  {key: '3', amount: 5050, date: '2016/8/24'},
 ];

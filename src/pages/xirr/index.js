@@ -15,7 +15,7 @@ import numeral from 'numeral';
 import React from "react";
 import lodash from "lodash";
 import styles from './index.css';
-import {EditableTable} from "@/pages/xirr/add";
+import {EditableTable} from "@/components/add";
 
 export default class XIRR extends React.Component {
   state = {
@@ -32,7 +32,6 @@ export default class XIRR extends React.Component {
   }
 
   calcXIRR = () => {
-    try {
       let source = lodash.cloneDeep(this.state.source);
       source.map(item => {item.when = moment(item.date,dateFormatIn).toDate();item.amount=Number(item.amount)});
 
@@ -56,18 +55,20 @@ export default class XIRR extends React.Component {
           let m = moment(lastDate, dateFormatIn).add(j, 'd');
           let t = m.format(dateFormatOut);
           source[len].when = m.toDate();
-          obj[t] = numeral(xirr(source)).format('0,0.000%');
+          try {
+            obj[t] = numeral(xirr(source)).format('0,0.000%');
+          }catch (e) {
+            obj[t] ='-';
+            notification.open({
+              message: '提示:',
+              description: e.message,
+            });
+            console.log(e.stack);
+          }
         }
         dataSource.push(obj);
       }
       this.setState({columns, dataSource});
-    }catch (e) {
-      notification.open({
-        message: '提示:',
-        description: e.message,
-      });
-      console.log(e.stack);
-    }
   };
   add = (source=[]) => {
       this.setState( {source},()=>this.calcXIRR())

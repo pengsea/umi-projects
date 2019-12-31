@@ -35,7 +35,11 @@
 .addTable td {
   padding: 4px !important;
 }
-
+.currentRow{
+  color: #495057;
+  background-color: #e9ecef;
+  font-weight:bold
+}
 .panel :global(.ant-collapse-content-box){
   padding: 4px;
 }
