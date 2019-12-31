@@ -16,7 +16,7 @@
 }
 
 .addTable {
-  width: 400px;
+  width: 300px;
   margin: 0 auto;
 }
 
@@ -40,9 +40,16 @@
   background-color: #e9ecef;
   font-weight:bold
 }
+.collapse{
+  width: max-content;
+  margin: 0 auto;
+}
+.panel{
+  width: max-content;
+}
 .panel :global(.ant-collapse-content-box){
   padding: 4px;
 }
-.buttons{
+.buttons{margin-left: 4px;
   display: flex;flex-direction: column;justify-content: space-around;
 }

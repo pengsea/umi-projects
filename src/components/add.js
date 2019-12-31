@@ -1,4 +1,4 @@
-import {Table, Input, Button, Popconfirm, Form, Row, Col, Tag} from 'antd';
+import {Table, Input, Button,  Form, Row, Col, Tag} from 'antd';
 import * as React from "react";
 import moment from "moment";
 import {dateFormatIn} from "@/utils/table";
@@ -87,9 +87,7 @@ export class EditableTable extends React.Component {
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
-            <Popconfirm title="确认删除?" onConfirm={() => this.handleDelete(record.key)}>
-              <Tag>删除</Tag>
-            </Popconfirm>
+              <Tag onClick={() => this.handleDelete(record.key)}>删除</Tag>
           ) : null,
       },
     ];
