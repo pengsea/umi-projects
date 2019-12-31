@@ -1,5 +1,5 @@
 import xirr from 'xirr'
-import {Button, Collapse, Modal, notification, Popover, Row, Table} from "antd";
+import {Button, Collapse,  notification, Popover, Row, Table} from "antd";
 import {
   columnRender,
   col,
@@ -22,7 +22,6 @@ export default class XIRR extends React.Component {
     source: [],
     columns: [],
     dataSource: [],
-    addVisible: false,
   };
 
   componentDidMount() {
@@ -65,22 +64,20 @@ export default class XIRR extends React.Component {
     }catch (e) {
       notification.open({
         message: '提示:',
-        description: e.toString(),
+        description: e.message,
       });
+      console.log(e.stack);
     }
   };
-  toggleAddVisible = () => {
-      this.setState(state => ({addVisible: !state.addVisible}),)
-  };
   add = (source=[]) => {
-      this.setState(state => ({addVisible: !state.addVisible,source}),()=>this.calcXIRR())
+      this.setState( {source},()=>this.calcXIRR())
   };
   showDemo = () => {
     this.setState({source: demo}, () => this.calcXIRR())
   };
 
   render() {
-    const {columns, dataSource, source, addVisible} = this.state;
+    const {columns, dataSource, source} = this.state;
     const content = (
       <div>
         <Table columns={sourceCol} dataSource={source} pagination={false} size={'small'} bordered={true}/>
@@ -90,17 +87,13 @@ export default class XIRR extends React.Component {
       <div className={styles.normal}>
         <Row className={styles.row}>
           <Popover content={content} title="">
-            <Button type="primary">源数据</Button>
+            <Button type="primary">查看源数据</Button>
           </Popover>
-          <Button type={'primary'} onClick={this.toggleAddVisible}>编辑数据</Button>
           <Button type={'primary'} onClick={this.showDemo}>Demo</Button>
         </Row>
         <Table columns={columns} dataSource={dataSource} pagination={false} bordered={true} size={'small'} className={styles.table}/>
-        {addVisible && <Modal visible={addVisible} onCancel={this.toggleAddVisible} footer={null}>
-          <EditableTable dataSource={source} onOk={this.add}/>
-        </Modal>}
         <Collapse defaultActiveKey={['1']}>
-          <Collapse.Panel header="This is panel header 1" key="1">
+          <Collapse.Panel header="编辑数据" key="1" className={styles.panel}>
             <EditableTable dataSource={source} onOk={this.add}/>
           </Collapse.Panel>
         </Collapse>

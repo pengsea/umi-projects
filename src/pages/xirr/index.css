@@ -14,13 +14,28 @@
   width: 1600px;
   margin: 0 auto;
 }
-.addTable{
 
+.addTable {
+  width: 400px;
+  margin: 0 auto;
 }
+
 .table th {
   padding: 4px !important;
 }
 
 .table td {
   padding: 4px !important;
+}
+
+.addTable th {
+  padding: 4px !important;
+}
+
+.addTable td {
+  padding: 4px !important;
+}
+
+.panel :global(.ant-collapse-content-box){
+  padding: 4px;
 }

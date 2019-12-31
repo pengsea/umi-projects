@@ -1,7 +1,7 @@
 import {Table, Input, Button, Popconfirm, Form} from 'antd';
 import * as React from "react";
 import moment from "moment";
-import {dateFormat} from "@/utils/table";
+import {dateFormatIn} from "@/utils/table";
 import styles from "@/pages/xirr/index.css";
 
 const EditableContext = React.createContext();
@@ -15,18 +15,8 @@ const EditableRow = ({form, index, ...props}) => (
 const EditableFormRow = Form.create()(EditableRow);
 
 class EditableCell extends React.Component {
-  state = {
-    editing: false,
-  };
+  state = {};
 
-  toggleEdit = () => {
-    const editing = !this.state.editing;
-    this.setState({editing}, () => {
-      if (editing) {
-        this.input.focus();
-      }
-    });
-  };
 
   save = e => {
     const {record, handleSave} = this.props;
@@ -34,36 +24,25 @@ class EditableCell extends React.Component {
       if (error && error[e.currentTarget.id]) {
         return;
       }
-      this.toggleEdit();
       handleSave({...record, ...values});
     });
   };
 
   renderCell = form => {
     this.form = form;
-    const {children, dataIndex, record, title} = this.props;
-    const {editing} = this.state;
-    return editing ? (
-      <Form.Item style={{margin: 0}}>
-        {form.getFieldDecorator(dataIndex, {
-          rules: [
-            {
-              required: true,
-              message: `${title} is required.`,
-            },
-          ],
-          initialValue: record[dataIndex],
-        })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save}/>)}
-      </Form.Item>
-    ) : (
-      <div
-        className="editable-cell-value-wrap"
-        style={{paddingRight: 24}}
-        onClick={this.toggleEdit}
-      >
-        {children}
-      </div>
-    );
+    const {dataIndex, record, title} = this.props;
+    return <Form.Item style={{margin: 0}}>
+      {form.getFieldDecorator(dataIndex, {
+        rules: [
+          {
+            required: true,
+            message: `${title} is required.`,
+          },
+        ],
+        initialValue: record[dataIndex],
+      })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save}/>)}
+    </Form.Item>
+      ;
   };
 
   render() {
@@ -131,7 +110,7 @@ export class EditableTable extends React.Component {
     const newData = {
       key: count,
       amount: `0`,
-      date: moment().format(dateFormat),
+      date: moment().format(dateFormatIn),
     };
     this.setState({
       dataSource: [...dataSource, newData],
@@ -179,10 +158,10 @@ export class EditableTable extends React.Component {
     });
     return (
       <div>
-        <Button onClick={this.handleAdd} type="primary" style={{marginRight: 16}}>
+        <Button onClick={this.handleAdd} type="primary" style={{marginRight: 40}}>
           添加一行
         </Button>
-        <Button onClick={this.handleOk} type="primary" style={{marginBottom: 16}}>
+        <Button onClick={this.handleOk} type="primary" style={{marginBottom: 4}}>
           计算
         </Button>
         <Table pagination={false}
