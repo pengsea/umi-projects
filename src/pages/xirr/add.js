@@ -2,6 +2,7 @@ import {Table, Input, Button, Popconfirm, Form} from 'antd';
 import * as React from "react";
 import moment from "moment";
 import {dateFormat} from "@/utils/table";
+import styles from "@/pages/xirr/index.css";
 
 const EditableContext = React.createContext();
 
@@ -186,7 +187,7 @@ export class EditableTable extends React.Component {
         </Button>
         <Table pagination={false}
                components={components}
-               rowClassName={() => 'editable-row'}
+               className={styles.addTable}
                bordered
                dataSource={dataSource}
                columns={columns}

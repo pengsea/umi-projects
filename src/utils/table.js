@@ -7,7 +7,8 @@ export const sourceCol = [
 export const col = [
   {dataIndex: 'index', title: '', key: 'index',render:text=>numeral(text).format('0,0.00')}
 ];
-export const dateFormat = 'YYYY/M/DD';
+export const dateFormatIn = 'YYYY/M/D';
+export const dateFormatOut = 'YY/M/D';
 export const days = [0, 1, 2, 3, 4, 5, 6, 7, 14, 21, 28, 60, 90, 180, 270, 360];
 export const dayTexts = ['当天', '1天', '2天', '3天', '4天', '5天', '6天', '1周', '2周', '3周', '1月', '2月', '1季',
   '2季', '3季', '1年'];

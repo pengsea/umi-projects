@@ -1,6 +1,15 @@
 import xirr from 'xirr'
-import {Button, Modal, notification, Popover, Row, Table} from "antd";
-import {columnRender, col, dateFormat, demo, multiply, days, dayTexts, sourceCol} from "../../utils/table";
+import {Button, Collapse, Modal, notification, Popover, Row, Table} from "antd";
+import {
+  columnRender,
+  col,
+  demo,
+  multiply,
+  days,
+  dayTexts,
+  sourceCol,
+  dateFormatIn, dateFormatOut
+} from "../../utils/table";
 import moment from "moment";
 import numeral from 'numeral';
 import React from "react";
@@ -26,7 +35,7 @@ export default class XIRR extends React.Component {
   calcXIRR = () => {
     try {
       let source = lodash.cloneDeep(this.state.source);
-      source.map(item => {item.when = moment(item.date,dateFormat).toDate();item.amount=Number(item.amount)});
+      source.map(item => {item.when = moment(item.date,dateFormatIn).toDate();item.amount=Number(item.amount)});
 
       const len = source.length - 1;
       let lastAmount = source[len].amount;
@@ -34,9 +43,9 @@ export default class XIRR extends React.Component {
       let columns = lodash.cloneDeep(col);
       let dataSource = [];
       for (let i = 0; i < days.length; i++) {
-        let text = moment(lastDate, dateFormat).add(days[i], 'd').format(dateFormat);
+        let text = moment(lastDate, dateFormatIn).add(days[i], 'd').format(dateFormatOut);
         columns.push({
-          dataIndex: text, key: text, title: `${text}(${dayTexts[i]})`, render: columnRender
+          dataIndex: text, key: text, title: `${text}(${dayTexts[i]})`, render: columnRender,align:'center'
         })
       }
 
@@ -45,8 +54,8 @@ export default class XIRR extends React.Component {
         source[len].amount = text;
         let obj = {key: i, index: text};
         for (let j of days) {
-          let m = moment(lastDate, dateFormat).add(j, 'd');
-          let t = m.format(dateFormat);
+          let m = moment(lastDate, dateFormatIn).add(j, 'd');
+          let t = m.format(dateFormatOut);
           source[len].when = m.toDate();
           obj[t] = numeral(xirr(source)).format('0,0.000%');
         }
@@ -74,7 +83,7 @@ export default class XIRR extends React.Component {
     const {columns, dataSource, source, addVisible} = this.state;
     const content = (
       <div>
-        <Table columns={sourceCol} dataSource={source} pagination={false} size={'small'}/>
+        <Table columns={sourceCol} dataSource={source} pagination={false} size={'small'} bordered={true}/>
       </div>
     );
     return (
@@ -90,6 +99,11 @@ export default class XIRR extends React.Component {
         {addVisible && <Modal visible={addVisible} onCancel={this.toggleAddVisible} footer={null}>
           <EditableTable dataSource={source} onOk={this.add}/>
         </Modal>}
+        <Collapse defaultActiveKey={['1']}>
+          <Collapse.Panel header="This is panel header 1" key="1">
+            <EditableTable dataSource={source} onOk={this.add}/>
+          </Collapse.Panel>
+        </Collapse>
       </div>
     );
   }

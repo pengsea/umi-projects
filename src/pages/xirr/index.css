@@ -3,9 +3,24 @@
   margin: 0 auto;
   text-align: center;
 }
-.row{
-  padding: 5px;display: flex;justify-content: space-around;
+
+.row {
+  padding: 5px;
+  display: flex;
+  justify-content: space-around;
 }
-.table th{
-  padding: 6px!important;
+
+.table {
+  width: 1600px;
+  margin: 0 auto;
+}
+.addTable{
+
+}
+.table th {
+  padding: 4px !important;
+}
+
+.table td {
+  padding: 4px !important;
 }
