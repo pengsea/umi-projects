@@ -1,4 +1,4 @@
-import {Table, Input, Button, Popconfirm, Form} from 'antd';
+import {Table, Input, Button, Popconfirm, Form, Row, Col, Tag} from 'antd';
 import * as React from "react";
 import moment from "moment";
 import {dateFormatIn} from "@/utils/table";
@@ -83,12 +83,12 @@ export class EditableTable extends React.Component {
         editable: true,
       },
       {
-        title: 'operation',
+        title: '操作',
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
-            <Popconfirm title="Sure to delete?" onConfirm={() => this.handleDelete(record.key)}>
-              <a>Delete</a>
+            <Popconfirm title="确认删除?" onConfirm={() => this.handleDelete(record.key)}>
+              <Tag>删除</Tag>
             </Popconfirm>
           ) : null,
       },
@@ -157,21 +157,21 @@ export class EditableTable extends React.Component {
       };
     });
     return (
-      <div>
-        <Button onClick={this.handleAdd} type="primary" style={{marginRight: 40}}>
-          添加一行
-        </Button>
-        <Button onClick={this.handleOk} type="primary" style={{marginBottom: 4}}>
-          计算
-        </Button>
-        <Table pagination={false}
-               components={components}
-               className={styles.addTable}
-               bordered
-               dataSource={dataSource}
-               columns={columns}
-        />
-      </div>
+      <Row type={'flex'} justify={'center'}>
+        <Col>
+          <Table pagination={false}
+                 components={components}
+                 className={styles.addTable}
+                 bordered
+                 dataSource={dataSource}
+                 columns={columns}
+          />
+        </Col>
+        <Col className={styles.buttons} offset={1}>
+          <Button onClick={this.handleAdd} type="primary"> 添加一行 </Button>
+          <Button onClick={this.handleOk} type="primary"> 计算 </Button>
+        </Col>
+      </Row>
     );
   }
 }

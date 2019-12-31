@@ -33,7 +33,7 @@ export default class XIRR extends React.Component {
 
   calcXIRR = () => {
       let source = lodash.cloneDeep(this.state.source);
-      source.map(item => {item.when = moment(item.date,dateFormatIn).toDate();item.amount=Number(item.amount)});
+      source.forEach(item => {item.when = moment(item.date,dateFormatIn).toDate();item.amount=Number(item.amount)});
 
       const len = source.length - 1;
       let lastAmount = source[len].amount;

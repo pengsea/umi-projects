@@ -11,7 +11,7 @@
 }
 
 .table {
-  width: 1600px;
+  width: 1630px;
   margin: 0 auto;
 }
 
@@ -42,4 +42,7 @@
 }
 .panel :global(.ant-collapse-content-box){
   padding: 4px;
+}
+.buttons{
+  display: flex;flex-direction: column;justify-content: space-around;
 }
