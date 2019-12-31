@@ -1,11 +1,11 @@
 import React from "react";
-import {Tag} from "antd";
+import {Tag} from "antd";import numeral from 'numeral';
 export const sourceCol = [
   {dataIndex: 'amount', title: '数量', key: 'amount'},
   {dataIndex: 'date', title: '日期', key: 'date'},
 ];
 export const col = [
-  {dataIndex: 'index', title: '', key: 'index'}
+  {dataIndex: 'index', title: '', key: 'index',render:text=>numeral(text).format('0,0.00')}
 ];
 export const dateFormat = 'YYYY/M/DD';
 export const days = [0, 1, 2, 3, 4, 5, 6, 7, 14, 21, 28, 60, 90, 180, 270, 360];
@@ -21,8 +21,8 @@ export const columnRender = (text, record) => {
   }
 };
 export const demo = [
-  {amount: -1000, date:'2016/1/15'},
-  {amount: -2500, date:'2016/2/8' },
-  {amount: -1000, date:'2016/4/17'},
-  {amount: 5050, date:'2016/8/24'},
+  { key: '0',amount: -1000, date:'2016/1/15'},
+  { key: '1',amount: -2500, date:'2016/2/8' },
+  { key: '2',amount: -1000, date:'2016/4/17'},
+  { key: '3',amount: 5050, date:'2016/8/24'},
 ];
