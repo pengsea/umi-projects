@@ -1,5 +1,5 @@
 import xirr from 'xirr'
-import {Button, Collapse, notification, Popover, Row, Table} from "antd";
+import {Button, Collapse, Drawer, notification, Popover, Row, Table} from "antd";
 import {
   columnRender,
   col,
@@ -9,7 +9,7 @@ import {
   dayTexts,
   sourceCol,
   dateFormatIn, dateFormatOut
-} from "../../utils/table";
+} from "../../utils/utils";
 import moment from "moment";
 import numeral from 'numeral';
 import React from "react";
@@ -22,6 +22,7 @@ export default class XIRR extends React.Component {
     source: [],
     columns: [],
     dataSource: [],
+    drawerVisible:false,//抽屉开关
   };
 
   componentDidMount() {
@@ -80,8 +81,12 @@ export default class XIRR extends React.Component {
     this.setState({source: demo}, () => this.calcXIRR())
   };
 
+  toggleDrawerVisible=()=>{
+  this.setState(state=>({drawerVisible: !state.drawerVisible}))
+  };
+
   render() {
-    const {columns, dataSource, source} = this.state;
+    const {columns, dataSource, source,drawerVisible} = this.state;
     const content = (
       <div>
         <Table columns={sourceCol} dataSource={source} pagination={false} size={'small'} bordered={true}/>
@@ -90,11 +95,12 @@ export default class XIRR extends React.Component {
     return (
       <div className={styles.normal}>
         <Row className={styles.row}>
-          <Button> <a href={'index.html'}>返回</a></Button>
+          <Button> <a href={'/'}>返回</a></Button>
           <Popover content={content} title="">
             <Button type="primary">查看源数据</Button>
           </Popover>
           <Button type={'primary'} onClick={this.showDemo}>Demo</Button>
+          <Button type={'primary'} onClick={this.toggleDrawerVisible}>历史记录</Button>
         </Row>
         <Table columns={columns} dataSource={dataSource} pagination={false} bordered={true} size={'small'}
                className={styles.table}/>
@@ -103,6 +109,17 @@ export default class XIRR extends React.Component {
             <EditableTable dataSource={source} onOk={this.add}/>
           </Collapse.Panel>
         </Collapse>
+        <Drawer
+          title="Basic Drawer"
+          placement={'left'}
+          closable={false}
+          onClose={this.toggleDrawerVisible}
+          visible={drawerVisible}
+        >
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+          <p>Some contents...</p>
+        </Drawer>
       </div>
     );
   }

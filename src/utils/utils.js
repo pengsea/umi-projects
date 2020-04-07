@@ -22,6 +22,7 @@ export const columnRender = (text, record) => {
     return text;
   }
 };
+export const icp='';
 export const demo = [
   {key: '0', amount: -1000, date: '2016/1/15'},
   {key: '1', amount: -2500, date: '2016/2/8'},

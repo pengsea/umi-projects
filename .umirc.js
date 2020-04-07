@@ -25,8 +25,4 @@ export default {
       },
     }],
   ],
-  exportStatic: {
-    htmlSuffix: true,
-    dynamicRoot: true,
-  },
 }

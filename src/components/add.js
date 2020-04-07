@@ -1,7 +1,7 @@
 import {Table, Input, Button,  Form, Row, Col, Tag} from 'antd';
 import * as React from "react";
 import moment from "moment";
-import {dateFormatIn} from "@/utils/table";
+import {dateFormatIn} from "@/utils/utils";
 import styles from "@/pages/xirr/index.css";
 
 const EditableContext = React.createContext();
