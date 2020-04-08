@@ -25,6 +25,7 @@ export default {
 
     }],
   ],
+  hash:true,
   history: 'hash',
   publicPath:'./',
   // base:'./'
