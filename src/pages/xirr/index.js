@@ -95,7 +95,7 @@ export default class XIRR extends React.Component {
     return (
       <div className={styles.normal}>
         <Row className={styles.row}>
-          <Button> <a href={'/'}>返回</a></Button>
+          <Button> <a href={'#/'}>返回</a></Button>
           <Popover content={content} title="">
             <Button type="primary">查看源数据</Button>
           </Popover>

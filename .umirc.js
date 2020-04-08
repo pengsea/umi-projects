@@ -1,4 +1,3 @@
-
 // ref: https://umijs.org/config/
 export default {
   treeShaking: true,
@@ -7,8 +6,8 @@ export default {
     ['umi-plugin-react', {
       antd: true,
       dva: true,
-      dynamicImport: { webpackChunkName: true },
-      title: 'umi-projects',
+      dynamicImport: {webpackChunkName: true},
+      title: 'pengsea',
       dll: true,
       locale: {
         enable: true,
@@ -23,6 +22,10 @@ export default {
           /components\//,
         ],
       },
+
     }],
   ],
+  history: 'hash',
+  publicPath:'./',
+  // base:'./'
 }
