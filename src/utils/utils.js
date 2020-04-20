@@ -1,6 +1,7 @@
 import React from "react";
 import numeral from 'numeral';
 import styles from '../pages/xirr/index.css';
+import {defaultICP} from "@/utils/constant";
 
 export const sourceCol = [
   {dataIndex: 'amount', title: '数量', key: 'amount'},
@@ -23,7 +24,7 @@ export const columnRender = (text, record) => {
     return text;
   }
 };
-export const icp = '';
+export const icp = defaultICP;
 export const demo = [
   {key: '0', amount: -1000, date: '2016/1/15'},
   {key: '1', amount: -2500, date: '2016/2/8'},
