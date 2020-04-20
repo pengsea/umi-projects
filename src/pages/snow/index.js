@@ -1,9 +1,17 @@
 import React from "react";
 import * as THREE from 'three';
+import styles from './index.css'
 import noisePng from '../../assets/noise.png'
+import {defaultPoetry} from "@/utils/utils";
+
 export default class Snow extends React.Component {
+  state = {
+    poetry: null
+  };
+
   componentDidMount() {
     this.init();
+    this.getPoetry();
   }
 
   init = () => {
@@ -245,9 +253,34 @@ under the fragment shader.
     }
   };
 
+  getPoetry = () => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('get', 'https://v1.jinrishici.com/all.json');
+    xhr.onreadystatechange = () => {
+      if (xhr.readyState === 4) {
+        this.setState({poetry: JSON.parse(xhr.response)})
+      } else {
+        this.setState({
+          poetry: null
+        })
+      }
+    };
+    xhr.send();
+  };
+
   render() {
+    const {poetry} = this.state;
+    const showPoetry = poetry ? poetry : defaultPoetry;
     return (
-      <div id="container" style={{height:'100vh'}}/>
+      <div className={styles.poetryP}>
+        <div id="container" style={{height: '100vh'}}/>
+        <div className={styles.poetry}>
+          <div className={styles.origin}>{showPoetry.origin}</div>
+          <div className={styles.content}>{showPoetry.content}</div>
+          <div className={styles.author}>{showPoetry.author}</div>
+          <button onClick={this.getPoetry} className={styles.next}>下一句</button>
+        </div>
+      </div>
     );
   }
 }

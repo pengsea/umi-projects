@@ -1,6 +1,7 @@
 import React from "react";
 import numeral from 'numeral';
 import styles from '../pages/xirr/index.css';
+
 export const sourceCol = [
   {dataIndex: 'amount', title: '数量', key: 'amount'},
   {dataIndex: 'date', title: '日期', key: 'date'},
@@ -22,10 +23,13 @@ export const columnRender = (text, record) => {
     return text;
   }
 };
-export const icp='';
+export const icp = '';
 export const demo = [
   {key: '0', amount: -1000, date: '2016/1/15'},
   {key: '1', amount: -2500, date: '2016/2/8'},
   {key: '2', amount: -1000, date: '2016/4/17'},
   {key: '3', amount: 5050, date: '2016/8/24'},
 ];
+export const defaultPoetry = {
+  origin: '孔雀东南飞', content: '怅然遥相望，知是故人来。', author: '佚名'
+};
