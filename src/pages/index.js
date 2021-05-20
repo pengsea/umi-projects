@@ -12,7 +12,8 @@ export default function() {
         <hr />
       </div>
       <div>
-        <footer className={styles.footer}><a href={'http://www.beian.miit.gov.cn'} target={'_blank'}>{icp}</a></footer>
+        <footer className={styles.footer}>
+         <a href={'https://beian.miit.gov.cn'} target={'_blank'}>{icp}</a></footer>
       </div>
     </>
   );
