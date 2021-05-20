@@ -1,1 +1,1 @@
-export const defaultICP = '';
+export const defaultICP = '123';

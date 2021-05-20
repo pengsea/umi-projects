@@ -1,48 +1,41 @@
-import {Table, Input, Button,  Form, Row, Col, Tag} from 'antd';
-import * as React from "react";
-import moment from "moment";
-import {dateFormatIn} from "@/utils/utils";
-import styles from "@/pages/xirr/index.css";
+import { Table, Input, Button, Form, Row, Col, Tag } from 'antd';
+import * as React from 'react';
+import moment from 'moment';
+import { dateFormatIn } from '@/utils/utils';
+import styles from '@/pages/xirr/index.css';
 
 const EditableContext = React.createContext();
 
-const EditableRow = ({form, index, ...props}) => (
+const EditableFormRow = ({ form, index, ...props }) => (
   <EditableContext.Provider value={form}>
     <tr {...props} />
   </EditableContext.Provider>
 );
 
-const EditableFormRow = Form.create()(EditableRow);
-
 class EditableCell extends React.Component {
   state = {};
-
+  formRef = React.createRef();
 
   save = e => {
-    const {record, handleSave} = this.props;
-    this.form.validateFields((error, values) => {
+    const { record, handleSave } = this.props;
+    this.formRef.current.validateFields((error, values) => {
       if (error && error[e.currentTarget.id]) {
         return;
       }
-      handleSave({...record, ...values});
+      handleSave({ ...record, ...values });
     });
   };
 
   renderCell = form => {
-    this.form = form;
-    const {dataIndex, record, title} = this.props;
-    return <Form.Item style={{margin: 0}}>
-      {form.getFieldDecorator(dataIndex, {
-        rules: [
-          {
-            required: true,
-            message: `${title} is required.`,
-          },
-        ],
-        initialValue: record[dataIndex],
-      })(<Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save}/>)}
-    </Form.Item>
-      ;
+    const { dataIndex, record, title } = this.props;
+    return <Form.Item style={{ margin: 0 }} name={dataIndex} rules={[
+      {
+        required: true,
+        message: `${title} is required.`,
+      },
+    ]} initialValue={record[dataIndex]}>
+      <Input ref={node => (this.input = node)} onPressEnter={this.save} onBlur={this.save} />
+    </Form.Item>;
   };
 
   render() {
@@ -87,7 +80,7 @@ export class EditableTable extends React.Component {
         dataIndex: 'operation',
         render: (text, record) =>
           this.state.dataSource.length >= 1 ? (
-              <Tag onClick={() => this.handleDelete(record.key)}>删除</Tag>
+            <Tag onClick={() => this.handleDelete(record.key)}>删除</Tag>
           ) : null,
       },
     ];
@@ -100,11 +93,11 @@ export class EditableTable extends React.Component {
 
   handleDelete = key => {
     const dataSource = [...this.state.dataSource];
-    this.setState({dataSource: dataSource.filter(item => item.key !== key)});
+    this.setState({ dataSource: dataSource.filter(item => item.key !== key) });
   };
 
   handleAdd = () => {
-    const {count, dataSource} = this.state;
+    const { count, dataSource } = this.state;
     const newData = {
       key: count,
       amount: `0`,
@@ -116,7 +109,7 @@ export class EditableTable extends React.Component {
     });
   };
   handleOk = () => {
-    const {dataSource} = this.state;
+    const { dataSource } = this.state;
     this.props.onOk(dataSource);
   };
 
@@ -128,11 +121,11 @@ export class EditableTable extends React.Component {
       ...item,
       ...row,
     });
-    this.setState({dataSource: newData});
+    this.setState({ dataSource: newData });
   };
-
+  formRef = React.createRef();
   render() {
-    const {dataSource} = this.state;
+    const { dataSource } = this.state;
     const components = {
       body: {
         row: EditableFormRow,
@@ -154,9 +147,12 @@ export class EditableTable extends React.Component {
         }),
       };
     });
+
+
     return (
       <Row type={'flex'} justify={'center'}>
         <Col>
+          <Form ref={this.formRef} component={false}>
           <Table pagination={false}
                  components={components}
                  className={styles.addTable}
@@ -164,10 +160,11 @@ export class EditableTable extends React.Component {
                  dataSource={dataSource}
                  columns={columns}
           />
+          </Form>
         </Col>
         <Col className={styles.buttons} offset={1}>
-          <Button onClick={this.handleAdd} type="primary"> 添加一行 </Button>
-          <Button onClick={this.handleOk} type="primary"> 计算 </Button>
+          <Button onClick={this.handleAdd} type='primary'> 添加一行 </Button>
+          <Button onClick={this.handleOk} type='primary'> 计算 </Button>
         </Col>
       </Row>
     );
