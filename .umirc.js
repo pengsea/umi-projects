@@ -5,5 +5,15 @@ export default {
   hash: true,
   history: { type:'hash' },
   publicPath: './',
-  // base:'./'
+  nodeModulesTransform: {
+    type: 'none',
+    exclude: [],
+  },
+  targets: {
+    chrome: 79,
+    firefox: false,
+    safari: false,
+    edge: false,
+    ios: false,
+  },
 };
